@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Status Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        .status-message {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .offered {
+            background-color: #e8f5e9;
+            border-left: 6px solid #4caf50;
+            color: #2e7d32;
+        }
+        .rejected {
+            background-color: #ffebee;
+            border-left: 6px solid #f44336;
+            color: #c62828;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Hello, <span th:text="${name}">Candidate</span>!</h2>
+
+    <div class="status-message offered" th:if="${status == 'offered'}">
+        <p>🎉 <strong>Congratulations!</strong> You have been selected and will be receiving an official offer letter soon.</p>
+        <p>Please check your email for further instructions on the next steps in the onboarding process.</p>
+    </div>
+
+    <div class="status-message rejected" th:if="${status == 'rejected'}">
+        <p>😞 <strong>Thank you for applying.</strong> We appreciate the effort you put into your application.</p>
+        <p>Although you were not selected this time, we encourage you to apply for future openings.</p>
+    </div>
+
+    <div class="footer">
+        <p>Thank you for your time and interest in our organization.</p>
+        <p>Best wishes, <br><strong>The HR Team</strong></p>
+    </div>
+</div>
+</body>
+</html>
