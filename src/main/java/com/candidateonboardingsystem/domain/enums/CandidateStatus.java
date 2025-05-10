@@ -11,7 +11,7 @@ public enum CandidateStatus {
     REJECTED;
 
     private static final Map<CandidateStatus, Set<CandidateStatus>> validTransitions = Map.of(
-            APPLIED, EnumSet.of(INTERVIEWED),
+            APPLIED, EnumSet.of(INTERVIEWED, REJECTED),
             INTERVIEWED, EnumSet.of(OFFERED, REJECTED),
             OFFERED, EnumSet.noneOf(CandidateStatus.class),
             REJECTED, EnumSet.noneOf(CandidateStatus.class)

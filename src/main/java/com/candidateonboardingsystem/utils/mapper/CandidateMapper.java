@@ -10,10 +10,10 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface CandidateMapper {
 
-    //@Mapping(target = "status", expression = "java(CandidateStatus.valueOf(dto.getStatus()))")
+    @Mapping(source = "status", target = "status", qualifiedByName = "mapStatusToEnum")
     Candidate toEntity(CandidateDTO dto);
 
-   // @Mapping(source = "status", target = "status", qualifiedByName = "mapStatusToString")
+    @Mapping(source = "status", target = "status", qualifiedByName = "mapStatusToString")
     CandidateDTO toDto(Candidate candidate);
 
     @Named("mapStatusToEnum")

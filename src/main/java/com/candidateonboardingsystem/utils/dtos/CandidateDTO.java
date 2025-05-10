@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +16,9 @@ public class CandidateDTO implements Serializable {
     private String email;
     private String phone;
     private String status;
+
+    private LocalDateTime sentAt;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 }
 

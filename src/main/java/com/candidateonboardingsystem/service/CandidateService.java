@@ -69,13 +69,14 @@ public class CandidateService {
     }
 
 
-    public Candidate addCandidate(Candidate candidate) throws  Exception {
-        if(candidateRepository.existsById((long) candidate.getId())){
+    public Candidate addCandidate(Candidate candidate) throws Exception {
+        if (candidateRepository.existsById(candidate.getId())) {
             throw new Exception("Candidate already exists");
         }
+
+        candidate.setStatus(CandidateStatus.APPLIED);
         Candidate saved = candidateRepository.save(candidate);
 
-        // Notify document queue
         log.info("Candidate saved with ID: {}", saved.getId());
         documentProducer.sendCandidateId(saved.getId());
 

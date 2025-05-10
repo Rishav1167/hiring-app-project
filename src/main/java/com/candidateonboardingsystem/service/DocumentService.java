@@ -8,6 +8,8 @@ import com.candidateonboardingsystem.utils.dtos.DocumentDTO;
 import com.candidateonboardingsystem.utils.mapper.DocumentMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,12 +68,44 @@ public class DocumentService {
     }
 
 
-    public byte[] downloadDocument(Long id) {
+    public ResponseEntity<byte[]> downloadDocument(Long id) {
         Document document = documentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Document not found"));
-        return document.getFileData();
+
+        String fileName = document.getFileName();
+
+        MediaType mediaType = getMediaTypeForFileName(fileName);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .contentType(mediaType)
+                .body(document.getFileData());
     }
 
+    private MediaType getMediaTypeForFileName(String fileName) {
+        String extension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+        switch (extension) {
+            case "pdf":
+                return MediaType.APPLICATION_PDF;
+            case "png":
+                return MediaType.IMAGE_PNG;
+            case "jpg":
+            case "jpeg":
+                return MediaType.IMAGE_JPEG;
+            case "doc":
+                return MediaType.valueOf("application/msword");
+            case "docx":
+                return MediaType.valueOf("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            case "xls":
+                return MediaType.valueOf("application/vnd.ms-excel");
+            case "xlsx":
+                return MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            case "txt":
+                return MediaType.TEXT_PLAIN;
+            default:
+                return MediaType.APPLICATION_OCTET_STREAM;
+        }
+    }
     public Boolean checkIfAnyDocumentExists(Long candidateId) {
         boolean exists = documentRepository.existsByCandidateId(candidateId);
         log.info("Document exists for candidate {}: {}", candidateId, exists);

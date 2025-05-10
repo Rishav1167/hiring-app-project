@@ -46,12 +46,12 @@
 <div class="container">
     <h2>Hello, <span th:text="${name}">Candidate</span>!</h2>
 
-    <div class="status-message offered" th:if="${status == 'offered'}">
+    <div class="status-message offered" th:if="${status == 'OFFERED'}">
         <p>🎉 <strong>Congratulations!</strong> You have been selected and will be receiving an official offer letter soon.</p>
         <p>Please check your email for further instructions on the next steps in the onboarding process.</p>
     </div>
 
-    <div class="status-message rejected" th:if="${status == 'rejected'}">
+    <div class="status-message rejected" th:if="${status == 'REJECTED'}">
         <p>😞 <strong>Thank you for applying.</strong> We appreciate the effort you put into your application.</p>
         <p>Although you were not selected this time, we encourage you to apply for future openings.</p>
     </div>
