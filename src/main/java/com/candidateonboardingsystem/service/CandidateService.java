@@ -1,7 +1,5 @@
 package com.candidateonboardingsystem.service;
 
-
-
 import com.candidateonboardingsystem.domain.entity.Candidate;
 import com.candidateonboardingsystem.domain.enums.CandidateStatus;
 import com.candidateonboardingsystem.exceptions.CandidateNotFoundException;
@@ -21,8 +19,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -64,13 +66,13 @@ public class CandidateService {
         return candidates;
     }
 
-   // exception testing
+    @Cacheable(value = "candidates", key = "#id")
     public Candidate getCandidatesById(Long id) {
         return candidateRepository.findById(id)
                 .orElseThrow(() -> new CandidateNotFoundException(id));
     }
 
-
+    @CachePut(value = "candidates", key = "#result.id")
     public Candidate addCandidate(Candidate candidate) throws Exception {
         if (candidateRepository.existsById(candidate.getId())) {
             throw new Exception("Candidate already exists");
@@ -85,17 +87,16 @@ public class CandidateService {
         return saved;
     }
 
+    @CachePut(value = "candidates", key = "#id")
     public Candidate updateCandidate(Long id, Candidate candidate) {
         Optional<Candidate> existingCandidateOptional = candidateRepository.findById(id);
         if (existingCandidateOptional.isPresent()) {
             Candidate existingCandidate = existingCandidateOptional.get();
 
-            // Update basic info
             existingCandidate.setFullName(candidate.getFullName());
             existingCandidate.setEmail(candidate.getEmail());
             existingCandidate.setPhoneNumber(candidate.getPhoneNumber());
 
-            // Update status only if valid transition
             CandidateStatus currentStatus = existingCandidate.getStatus();
             CandidateStatus newStatus = candidate.getStatus();
 
@@ -111,8 +112,9 @@ public class CandidateService {
         throw new ResourceNotFoundException("Candidate not found with ID: " + id);
     }
 
+    @CacheEvict(value = "candidates", key = "#id")
     public void deleteCandidate(Long id) throws Exception {
-        if(!candidateRepository.existsById(id)) {
+        if (!candidateRepository.existsById(id)) {
             throw new Exception("Candidate not found");
         }
         candidateRepository.deleteById(id);
