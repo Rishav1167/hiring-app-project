@@ -1,8 +1,8 @@
-package com.candidateonboardingsystem.controller;
+package com.candidateonboardingsystem.controller.consumer;
 
 import com.candidateonboardingsystem.config.RabbitMQMail;
 import com.candidateonboardingsystem.service.EmailService;
-import com.candidateonboardingsystem.utils.dtos.CandidateDTO;
+import com.candidateonboardingsystem.domain.dtos.CandidateDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;

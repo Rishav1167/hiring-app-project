@@ -13,7 +13,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,30 +22,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class JwtSecurityConfig {
-    private final JwtAuthFilter jwtAuthFilter;
+    private final CustomUserDetailService customUserDetailsService;
+    private final UserDetailsRepository userDetailsRepository;
 
-    public JwtSecurityConfig(final JwtAuthFilter jwtAuthFilter) {
-        this.jwtAuthFilter = jwtAuthFilter;
+    public JwtSecurityConfig(final CustomUserDetailService customUserDetailsService,
+                          final UserDetailsRepository userDetailsRepository) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.userDetailsRepository = userDetailsRepository;
     }
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authReq -> authReq
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().authenticated());
 
-                .authorizeHttpRequests(
-                        authReq -> authReq
-                                .requestMatchers("/auth/authenticate/**").permitAll()
-                                .anyRequest().authenticated()
-                );
-        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailService();
+    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder) throws Exception {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(customUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(authProvider);
     }
 
     @Bean
@@ -53,25 +56,16 @@ public class JwtSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+
+    // to create default admin
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
-                                                       PasswordEncoder passwordEncoder) throws Exception {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
-        return new ProviderManager(authProvider);
-    }
-
-
-
-    // not necessary -> we are doing this in case we are doing it in temporary db
-    @Bean
-    public CommandLineRunner createAdmin(UserDetailsRepository userDetailsRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner createAdmin(PasswordEncoder passwordEncoder) {
         return args -> {
-            if (userDetailsRepository.findByUsername("Rishav").isEmpty()) {
+            if (userDetailsRepository.findByEmail("rishav7381@gmail.com").isEmpty()) {
                 User admin = new User();
-                admin.setUsername("Rishav");
-                admin.setPassword(passwordEncoder.encode("Rishav@123"));
+                admin.setEmail("rishav7381@gmail.com");
+                admin.setPassword(passwordEncoder.encode("admin123"));
                 admin.setRole("ADMIN");
                 userDetailsRepository.save(admin);
             }

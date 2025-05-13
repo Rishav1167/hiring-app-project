@@ -1,7 +1,9 @@
 package com.candidateonboardingsystem.service;
 
+import com.candidateonboardingsystem.domain.authDto.OtpMessage;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
@@ -36,6 +39,31 @@ public class EmailService {
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void sendOtpMail(final OtpMessage otpMessage) {
+        try{
+            Context context = new Context();
+            context.setVariable("otp", otpMessage.otp());
+            context.setVariable("email", otpMessage.email());
+
+            String htmlContent = templateEngine.process("otp-email-template", context);
+
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(
+                    mimeMessage,
+                    true,
+                    StandardCharsets.UTF_8.name()
+            );
+            helper.setTo(otpMessage.email());
+            helper.setSubject("OTP Notification");
+            helper.setText(htmlContent, true);
+
+            mailSender.send(mimeMessage);
+        }
+        catch (Exception e){
+            log.error(e.toString());
         }
     }
 }

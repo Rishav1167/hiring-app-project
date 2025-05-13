@@ -1,10 +1,9 @@
-package com.candidateonboardingsystem.service;
+package com.candidateonboardingsystem.service.producer;
 
 import com.candidateonboardingsystem.config.RabbitMQMail;
-import com.candidateonboardingsystem.utils.dtos.CandidateDTO;
+import com.candidateonboardingsystem.domain.dtos.CandidateDTO;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

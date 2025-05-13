@@ -1,8 +1,8 @@
-package com.candidateonboardingsystem.utils.mapper;
+package com.candidateonboardingsystem.domain.mapper;
 
 import com.candidateonboardingsystem.domain.entity.Candidate;
 import com.candidateonboardingsystem.domain.enums.CandidateStatus;
-import com.candidateonboardingsystem.utils.dtos.CandidateDTO;
+import com.candidateonboardingsystem.domain.dtos.CandidateDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

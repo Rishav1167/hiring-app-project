@@ -1,7 +1,7 @@
-package com.candidateonboardingsystem.utils.mapper;
+package com.candidateonboardingsystem.domain.mapper;
 
 
-import com.candidateonboardingsystem.utils.dtos.BankInfoDTO;
+import com.candidateonboardingsystem.domain.dtos.BankInfoDTO;
 import com.candidateonboardingsystem.domain.entity.BankInfo;
 import org.mapstruct.*;
 

@@ -1,15 +1,14 @@
 package com.candidateonboardingsystem.service;
 
 
-import com.candidateonboardingsystem.utils.dtos.BankInfoDTO;
+import com.candidateonboardingsystem.domain.dtos.BankInfoDTO;
 import com.candidateonboardingsystem.domain.entity.BankInfo;
 import com.candidateonboardingsystem.domain.entity.Candidate;
 import com.candidateonboardingsystem.exceptions.ResourceNotFoundException;
-import com.candidateonboardingsystem.utils.mapper.BankInfoMapper;
+import com.candidateonboardingsystem.domain.mapper.BankInfoMapper;
 import com.candidateonboardingsystem.repository.BankInfoRepository;
 import com.candidateonboardingsystem.repository.CandidateRepository;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 @Service
 public class BankInfoService {

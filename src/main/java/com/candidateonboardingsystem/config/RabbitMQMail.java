@@ -54,6 +54,24 @@ public class RabbitMQMail {
                 .with(DOCUMENT_ROUTING_KEY);
     }
 
+    @Bean
+    public Queue otpQueue() {
+        return new Queue("hiringAuthOtpQueue", true);
+    }
+
+    @Bean
+    public TopicExchange otpExchange() {
+        return new TopicExchange("hiringAuthOtpTopicExchange");
+    }
+
+    @Bean
+    public Binding otpBinding() {
+        return BindingBuilder
+                .bind(otpQueue())
+                .to(otpExchange())
+                .with("auth.*");
+    }
+
     // for deserialization  so rabbit mq can process it
     @Bean
     public MessageConverter jsonMessageConverter() {

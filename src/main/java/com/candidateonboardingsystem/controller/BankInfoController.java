@@ -1,6 +1,6 @@
 package com.candidateonboardingsystem.controller;
 
-import com.candidateonboardingsystem.utils.dtos.BankInfoDTO;
+import com.candidateonboardingsystem.domain.dtos.BankInfoDTO;
 import com.candidateonboardingsystem.service.BankInfoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -5,8 +5,8 @@ import com.candidateonboardingsystem.domain.entity.EducationalInfo;
 import com.candidateonboardingsystem.exceptions.ResourceNotFoundException;
 import com.candidateonboardingsystem.repository.CandidateRepository;
 import com.candidateonboardingsystem.repository.EducationalInfoRepository;
-import com.candidateonboardingsystem.utils.dtos.EducationalInfoDTO;
-import com.candidateonboardingsystem.utils.mapper.EducationalInfoMapper;
+import com.candidateonboardingsystem.domain.dtos.EducationalInfoDTO;
+import com.candidateonboardingsystem.domain.mapper.EducationalInfoMapper;
 import org.springframework.stereotype.Service;
 
 @Service

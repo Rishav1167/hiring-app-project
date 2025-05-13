@@ -2,7 +2,7 @@ package com.candidateonboardingsystem.controller;
 
 import com.candidateonboardingsystem.repository.DocumentRepository;
 import com.candidateonboardingsystem.service.DocumentService;
-import com.candidateonboardingsystem.utils.dtos.DocumentDTO;
+import com.candidateonboardingsystem.domain.dtos.DocumentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

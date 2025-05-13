@@ -1,8 +1,8 @@
-package com.candidateonboardingsystem.utils.mapper;
+package com.candidateonboardingsystem.domain.mapper;
 
 
 import com.candidateonboardingsystem.domain.entity.Document;
-import com.candidateonboardingsystem.utils.dtos.DocumentDTO;
+import com.candidateonboardingsystem.domain.dtos.DocumentDTO;
 
 public class DocumentMapper {
 

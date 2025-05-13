@@ -1,7 +1,6 @@
-package com.candidateonboardingsystem.utils.mapper;
+package com.candidateonboardingsystem.domain.mapper;
 
-import com.candidateonboardingsystem.utils.dtos.EducationalInfoDTO;
-import com.candidateonboardingsystem.domain.entity.Candidate;
+import com.candidateonboardingsystem.domain.dtos.EducationalInfoDTO;
 import com.candidateonboardingsystem.domain.entity.EducationalInfo;
 import org.mapstruct.*;
 

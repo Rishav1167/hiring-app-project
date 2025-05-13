@@ -1,7 +1,7 @@
 package com.candidateonboardingsystem.controller;
 
 import com.candidateonboardingsystem.service.EducationalInfoService;
-import com.candidateonboardingsystem.utils.dtos.EducationalInfoDTO;
+import com.candidateonboardingsystem.domain.dtos.EducationalInfoDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

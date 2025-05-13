@@ -1,4 +1,4 @@
-package com.candidateonboardingsystem.utils.dtos;
+package com.candidateonboardingsystem.domain.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

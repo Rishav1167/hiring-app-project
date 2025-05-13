@@ -1,4 +1,4 @@
-package com.candidateonboardingsystem.service;
+package com.candidateonboardingsystem.service.producer;
 
 import com.candidateonboardingsystem.config.RabbitMQMail;
 import lombok.extern.slf4j.Slf4j;

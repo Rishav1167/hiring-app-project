@@ -1,4 +1,4 @@
-package com.candidateonboardingsystem.service;
+package com.candidateonboardingsystem.controller.consumer;
 
 import com.candidateonboardingsystem.config.RabbitMQMail;
 import com.candidateonboardingsystem.domain.entity.Document;
