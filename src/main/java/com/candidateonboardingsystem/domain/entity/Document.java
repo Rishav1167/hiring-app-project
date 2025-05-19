@@ -21,7 +21,7 @@ public class Document {
     private String uploadedDate;
 
     @Lob
-    @Column(name = "file_data", columnDefinition = "LONGBLOB") // For MySQL; use BYTEA for PostgreSQL
+    @Column(name = "file_data", columnDefinition = "LONGBLOB")
     private byte[] fileData;
 
     @ManyToOne

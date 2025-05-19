@@ -33,13 +33,14 @@ public class JwtSecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(final HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authReq -> authReq
                         .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated());
 
+        http.addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

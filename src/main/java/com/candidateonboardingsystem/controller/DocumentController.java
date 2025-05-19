@@ -18,9 +18,6 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-    @Autowired
-    private DocumentRepository documentRepository;
-
     @PostMapping("/upload-multiple")
     public ResponseEntity<?> uploadMultipleDocuments(
             @RequestParam("documentType") String documentType,
